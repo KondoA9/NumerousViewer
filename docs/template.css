@@ -1,0 +1,31 @@
+#contents {
+    padding: 0;
+}
+
+.navbar {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.view-contents {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 80px;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.download-button {
+    line-height: 2rem;
+    width: 10rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
