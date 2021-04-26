@@ -35,14 +35,78 @@
             <div class="collapse navbar-collapse" id="navmenu">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="./">使い方</a>
-                    <a class="nav-item nav-link" href="../contact">コンタクト</a>
                     <a class="nav-item nav-link" href="../improve">機能改善</a>
+                    <a class="nav-item nav-link" href="../contact">コンタクト</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div id="contents" class="container-fluid text-center">
+    <div id="contents" class="container-fluid text-left mt-3">
+        <div class="content">
+            <h1>読み込み</h1>
+            <p>
+                csvファイルを読み込む際は、メニュー画面のFileからOpenを選択し、読み込みたいcsvファイルを選択してください。<br>
+                読み込む際は<a href="#setting-file-detail">設定ファイル</a>を必ず用意してください。
+            </p>
+        </div>
+
+        <div class="content">
+            <h1>csvファイルのフォーマット</h1>
+            <ul>
+                <li>読み込むcsvファイルの1行目は必ずヘッダ行としてください。</li>
+                <li>ヘッダーに示された列数以下/以上の行が存在しないようにしてください。</li>
+                <li>区切り文字はコンマ","としてください。</li>
+                <li>文字コードはUTF-8として保存してください。</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h1 id="setting-file-detail">設定ファイル</h1>
+            <p>
+                本ソフトウェアはcsvファイルを読み込む際、同時に<strong>csvファイルと同じフォルダにあるnumerous.settings.jsonファイル</strong>を自動的に読み込みます。<br>
+                以下に示すフォーマットに従ってjsonファイルを用意してください。必須ではない項目はデフォルト値が読み込まれます。
+            </p>
+            <pre class="bg-light">
+        {
+            "name": "Name",                                     設定の名称(必須)
+            "imagePathFormat": "${CSV_DIR}images/$[id].jpg",    読み込む画像の絶対パスとなるフォーマット(必須)<a href="#image-format-detail">詳細</a>
+            "columns": [                                        csvファイルの列の設定、以下の設定を配列として記述、順番に上から表示(デフォルトは全ての列を元のヘッダ名で表示)
+                {
+                    "name": "column name",                      csvファイル上のヘッダ名(必須)
+                    "displayName": "display name",              ヘッダ名のソフトウェア上での表示名(デフォルトはcsvファイル上のヘッダ名)
+                    "display": "false"                          ソフトウェア上でこの列を表示するかどうか(trueまたはfalse、デフォルトはtrue)
+                }
+            ]　　　　　　　　　　　　　　　　　　　　　 
+        }
+            </pre>
+
+            <h2 id="image-format-detail">画像ファイルのパスの設定</h2>
+            <p>
+                画像ファイルへのパスは、<strong>csvファイルから一意に定めることのできるパス</strong>である必要があります。<br>
+                imagePathFormatキーでは、以下に示すリテラルが使用可能です。
+                <ul>
+                    <li><strong>${CSV_DIR}</strong><br>
+                        読み込んだcsvファイルが存在するフォルダのパスを示します。<br>
+                        例)C:\Users\user\desktop\csv.csvを読み込んだ場合、${CSV_DIR}はC:\Users\user\desktop\に変換されます。
+                    </li>
+                    <li><strong>$[ヘッダ名]</strong><br>
+                        ヘッダ名に対応した値を示します。<br>
+                        例)csvファイルが以下のとき、<br>
+                        $[id]はそれぞれ0, 1, 2に<br>
+                        $[color]はred, blue, blueに<br>
+                        $[shape]はtriangle, square, triangleに<br>
+                        $[imagepath]はC:\images\triangle\0.jpg、C:\images\square\0.jpg、C:\images\triangle\1.jpgに変換されます。
+                        <pre class="bg-light">
+id, color,  shape,      imagepath
+0,  red,    triangle,   C:\images\triangle\0.jpg
+1,  blue,   square      C:\images\square\0.jpg
+2,  blue,   triangle    C:\images\triangle\1.jpg
+                        </pre>
+                    </li>
+                </ul>
+            </p>
+        </div>
     </div>
 
     <footer class="footer bg-dark text-white text-decoration-none">
